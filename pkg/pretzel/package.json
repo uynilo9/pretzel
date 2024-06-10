@@ -1,0 +1,21 @@
+{
+  "private": true,
+  "name": "@uynilo9/pretzel",
+  "type": "module",
+  "scripts": {
+    "sys:x": "chmod +x ./utils/*",
+    "p:build": "./utils/build.ts",
+    "p:move": "./utils/move.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/yargs": "^17.0.32"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "yargs": "^17.7.2"
+  }
+}
