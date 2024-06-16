@@ -17,5 +17,7 @@ github.com/uynilo9/logger.go v0.0.1-dev.3 h1:2Mwd2csTbWe3jGj7TDBBOgSJ6btuugvj6dn
 github.com/uynilo9/logger.go v0.0.1-dev.3/go.mod h1:7ob6Crkn3+zxnsTWYrS1Kz6Cogw0gb5xH/kHSU/K4Cs=
 github.com/uynilo9/logger.go v0.0.1-dev.4 h1:lRvqQKnfSzm9AX8GXXK7RcNskb2XWRYt9+7UpTyo1Uw=
 github.com/uynilo9/logger.go v0.0.1-dev.4/go.mod h1:7ob6Crkn3+zxnsTWYrS1Kz6Cogw0gb5xH/kHSU/K4Cs=
+github.com/uynilo9/logger.go v0.0.1-dev.5 h1:Pa1YmWIA1TsYUIJgkX0fU/OEjSBRvtC9cuNGqrHxl9E=
+github.com/uynilo9/logger.go v0.0.1-dev.5/go.mod h1:7ob6Crkn3+zxnsTWYrS1Kz6Cogw0gb5xH/kHSU/K4Cs=
 gopkg.in/yaml.v3 v3.0.0 h1:hjy8E9ON/egN1tAYqKb61G10WtihqetD4sz2H+8nIeA=
 gopkg.in/yaml.v3 v3.0.0/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=

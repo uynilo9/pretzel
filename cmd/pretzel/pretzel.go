@@ -1,10 +1,12 @@
 package main
 
 import (
-	// "errors"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
+	"strconv"
+	"strings"
 
 	"github.com/alexflint/go-arg"
 	"github.com/joho/godotenv"
@@ -39,17 +41,21 @@ func (args) Epilogue() string {
 }
 
 func main() {
-	dir := filepath.Dir(os.Args[0])
+	dir, _ := filepath.Abs(filepath.Dir(os.Args[0]))
 	env := filepath.Join(dir, "../.env")
 	if godotenv.Load(env) != nil && godotenv.Load() != nil {
 		logger.Fatalf("Failed to find or load the dotenv file `%s`\n", env)
 	}
+	
+	raw := strings.Join(append([]string{os.Getenv("A")}, os.Args[1:]...), " ")
+	
 	var args args
-	goarg, err := arg.NewParser(arg.Config{Program: "pretzel"}, &args)
+	goarg, err := arg.NewParser(arg.Config{Program: os.Getenv("A")}, &args)
 	if err != nil {
-		logger.Detail(err, "\n")
+		logger.Detailln(err)
 		logger.Fatalln("Failed to create the argument parser")
 	}
+	
 	goarg.Parse(os.Args[1:])
 	switch {
 		case args.Version:
@@ -60,14 +66,44 @@ func main() {
 			os.Exit(0)
 		case args.Add != nil:
 			if args.Add.Packages != nil {
-
+				program := filepath.Join(dir, os.Getenv("B"))
+				cmd := exec.Command(
+					program,
+					"--allowed=true",
+					"--@=add",
+					"--dev=" + strconv.FormatBool(args.Add.Dev),
+					"--optional=" + strconv.FormatBool(args.Add.Optional),
+					"--trusted=" + strconv.FormatBool(args.Add.Trusted),
+					"--peer=" + strconv.FormatBool(args.Add.Peer),
+					strings.Join(args.Add.Packages, " "),
+				)
+				// err := cmd.Run()
+				output, err := cmd.CombinedOutput() // NOTE For debugging
+				if err != nil {
+					logger.Detailln(err)
+					logger.Fatalf("Failed to execute the command `%s`\n", raw)
+				}
+				fmt.Println(string(output)) // NOTE For debugging
 			} else {
 				logger.Errorln("The argument <package> was required while running the `add` subcommand")
 				goarg.WriteHelp(os.Stdout)
 			}
 		case args.Remove != nil:
 			if args.Remove.Packages != nil {
-
+				program := filepath.Join(dir, os.Getenv("B"))
+				cmd := exec.Command(
+					program,
+					"--allowed=true",
+					"--@=remove",
+					strings.Join(args.Remove.Packages, " "),
+				)
+				// err := cmd.Run()
+				output, err := cmd.CombinedOutput() // NOTE For debugging
+				if err != nil {
+					logger.Detailln(err)
+					logger.Fatalf("Failed to execute the command `%s`\n", raw)
+				}
+				fmt.Println(string(output)) // NOTE For debugging
 			} else {
 				logger.Errorln("The argument <package> was required while running the `remove` subcommand")
 				goarg.WriteHelp(os.Stdout)		

@@ -1,1 +1,2 @@
 Init the entire project and take a rest
+Complete the command flags and the program call (almost)
